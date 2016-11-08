@@ -1,0 +1,12 @@
+{
+  "name": "node-github-api-test",
+  "port": "5443",
+  "mongo": {
+    "host": "127.0.0.1",
+    "db": "node-github-api-test",
+    "port": 27017,
+    "user": "",
+    "pwd": "",
+    "authSource": ""
+  }
+}

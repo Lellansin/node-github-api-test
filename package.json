@@ -1,0 +1,38 @@
+{
+  "name": "node-github-api-test",
+  "version": "0.0.1",
+  "description": "node-github api test.",
+  "private": false,
+  "main": "src/app.js",
+  "keywords": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lellansin/node-github-api-test/node-github-api-test.git"
+  },
+  "homepage": "https://github.com/Lellansin/node-github-api-test/node-github-api-test#readme",
+  "bugs": {
+    "url": "https://github.com/Lellansin/node-github-api-test/node-github-api-test/issues"
+  },
+  "author": "lellansin",
+  "license": "MIT",
+  "dependencies": {
+    "async": "^2.1.2",
+    "config": "^1.21.0",
+    "github": "^6.0.3",
+    "koa": "^1.2.0",
+    "koa-bodyparser": "^2.0.1",
+    "koa-log4": "^1.0.2",
+    "koa-router": "^5.4.0",
+    "mongoose": "^4.6.4",
+    "promise": "^7.1.1",
+    "request": "^2.78.0",
+    "request-promise": "^4.1.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
+    "should": "^8.3.2",
+    "supertest": "^2.0.0",
+    "supertest-as-promised": "^4.0.0"
+  }
+}
