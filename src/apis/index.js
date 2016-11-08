@@ -25,7 +25,7 @@ router
         </p>
         <p>
           我们准备来接 GitHub API. Ready?
-          <a href="https://github.com/login/oauth/authorize?scope=user%20public_repo&client_id=${client_id}">点击</a> 跳转授权!</a>
+          <a href="https://github.com/login/oauth/authorize?scope=user%20repo_deployment&client_id=${client_id}">点击</a> 跳转授权!</a>
         </p>
         <p>
           如果跳失败, 请检查你自己的 <a href="/v3/oauth/#web-application-flow">Client ID</a>!
@@ -44,15 +44,26 @@ router
         accept
       })
     let pri = qs.parse(res);
+    console.log('pri', pri);
 
-    console.log('pri', pri)
     let { access_token } = pri;
     console.log('access_token', access_token);
 
-    let repos = yield github.getRepos(access_token);
 
+    // get Repos list
+    // let result = yield github.getRepos(access_token);
+
+
+    // get package.json
+    // let result = yield github.getPackageConfig(access_token);
+    // console.log('result', result)
+    // result = new Buffer(result.content, 'base64').toString();
+
+    // update PR
+    let result = yield github.updatePR(access_token);
+    
     this.headers['Content-type'] = 'application/json';
-    this.body = repos;
+    this.body = result;
   });
 
 module.exports = router;
