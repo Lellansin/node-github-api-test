@@ -1,6 +1,6 @@
 {
   "name": "node-github-api-test",
-  "version": "0.0.1",
+  "version": "hello",
   "description": "node-github api test.",
   "private": false,
   "main": "src/app.js",
