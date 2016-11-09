@@ -33,42 +33,49 @@ exports.getPackageConfig = function * (token) {
  * access_token
  */
 exports.updatePR = function * (token, cb) {
+  // 认证
   github.authenticate({ type: 'oauth', token });
 
-  let branch = 'some-module-1.0.0';
+  let branch = 'some-module-1.0.5';
   let owner = 'Lellansin';
   let repo = 'node-github-api-test';
   let path = 'package.json';
+  let ref = `refs/heads/${branch}`;
 
-  let r1 = yield github.repos.addProtectedBranchRequiredStatusChecksContexts({
-    owner, repo, branch,
-    body: ['continuous-integration/travis-ci', 'continuous-integration/jenkins']
-  });
-  console.log('r1', r1);
-
+  // 获取文件内容
   let file = yield github.repos.getContent({
-    owner, repo, path
+    owner, repo, path, 
   });
+
+  // 获取 master 的 sha
+  let master = yield github.gitdata.getReference({ owner, repo, ref: 'heads/master' });
+
+  // 根据 master 创建新的 branch
+  let r1 = yield github.gitdata.createReference({
+    owner, repo, ref, sha: master.object.sha,
+  });
+
 
   if (!cb) {
     cb = function (content) {
       let data = JSON.parse(new Buffer(content, 'base64').toString());
       data.version = 'hello';
-      return JSON.stringify(data);
+      return JSON.stringify(data, null, 2);
     };
   }
 
-  let {sha, json} = file;
-  let content = new Buffer(cb(json)).toString('base64');
+  // 修改文件
+  let {sha} = file;
+  let content = new Buffer(cb(file.content)).toString('base64');
 
+  // 提交修改
   let r2 = yield github.repos.updateFile({
     owner, repo, branch, sha, path,
     message: 'test update package.json',
     content
   })
 
-  console.log('r2', r2);
-
+  // 提交 pr
   let r3 = yield github.pullRequests.create({
     owner, repo,
     title: `update ${branch} pull request`,
